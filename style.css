@@ -1,23 +1,44 @@
 /* css part */
 
+body {
+    background-color: rgba(0, 0, 0, 0.945);
+    width: 100%;
+    margin: 0;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-family: Bradley Hand, cursive;
+    font-size: 20px;
+    color: rgb(0, 68, 255);
+    background-color: rgb(27, 27, 27);
+    margin-bottom: 30px;
+}
+
 .gridContainer {
     display: flex;
     flex-wrap: wrap;
     width: 500px;
     height: 500px;
-    background-color: white;
+    border: solid 1px white;
+    background-color: rgba(255, 255, 255, 0.342);
 }
 
 .gridItem {
-    border: solid 1px red;
+    border: solid 1px white;
     box-sizing: border-box;
 }
 
 .container {
     display: flex;
+    justify-content: space-evenly;
 }
 
 .option {
     display: flex;
     flex-direction: column;
+    color: rgb(89, 208, 255);
+    justify-content: space-around;
+    border: solid 1px white;
 }
