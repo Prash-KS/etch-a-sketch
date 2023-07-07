@@ -22,7 +22,7 @@ body {
     width: 500px;
     height: 500px;
     border: solid 1px white;
-    background-color: rgba(255, 255, 255, 0.342);
+    background-color: #949494;
 }
 
 .gridItem {
@@ -33,12 +33,68 @@ body {
 .container {
     display: flex;
     justify-content: space-evenly;
+    padding: 0 50px;
 }
 
 .option {
     display: flex;
     flex-direction: column;
+    align-items: center;
     color: rgb(89, 208, 255);
-    justify-content: space-around;
-    border: solid 1px white;
+    background-color: rgb(27, 27, 27);
+    width: 230px;
 }
+
+.btn {
+    width: 150px;
+    height: 35px;
+    font-family: 'Averia Sans Libre', cursive;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.185);
+    color: rgb(0, 255, 234);
+    border: solid 3px rgb(21, 25, 255);
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.btn:hover {
+    border: solid 2px rgb(0, 255, 234);
+}
+
+.changeColor {
+    width: 80%;
+    font-family: 'Averia Sans Libre', cursive;
+    color: rgb(0, 255, 234);
+
+}
+
+.penColor {
+    margin: 40px 10px 20px 0;
+}
+
+.bgColor {
+    margin: 0 10px 40px 0;
+}
+
+.grids {
+    font-family: 'Averia Sans Libre', cursive;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+#rangeSlider {
+    border-radius: 8px;
+    height: 4px;
+    width: 150px;
+    outline: none;
+    appearance: none;
+    margin-top: 40px;
+  }
+  
+input[type='range']::-webkit-slider-thumb {
+    width: 6px;
+    appearance: none;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.945);
+    border-radius: 2px;
+  }

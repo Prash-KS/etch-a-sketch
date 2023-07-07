@@ -9,14 +9,7 @@ function createGrid(itemDimension=16) {
       gridItem.style.height = 500/itemDimension + 'px';
       gridItem.classList.add('gridItem');
   }
-  let gridItems = document.querySelectorAll('.gridItem');
-  let penColor = document.querySelector('.penColor');
-  gridItems.forEach(function(gridItem) {
-    gridItem.addEventListener('mouseover', function() {
-      this.style.backgroundColor = penColor.value;
-    });
-  });
-  updatePenColor();
+  penColor();
   toggleRgbColor();
   toggleEraser();
   toggleGridLine(); 
@@ -31,28 +24,41 @@ function deleteExistingGrid() {
   }
 }
 
-function updatePenColor() {
-  let penColor = document.querySelector('.penColor');
+function penColor() {
   let gridItems = document.querySelectorAll('.gridItem');
-  penColor.addEventListener('input', function() {
-    gridItems.forEach(function(gridItem) {
-      gridItem.addEventListener('mouseover', function() {
-        this.style.backgroundColor = penColor.value;
-      });
+  let penColor = document.querySelector('.penColor');
+  gridItems.forEach(function(gridItem) {
+    gridItem.addEventListener('mouseover', function() {
+      this.style.backgroundColor = penColor.value;
+    });
+  });
+}
+
+function toggleClickColor(eraserBtn, rgbButton) {
+  let eraser = document.querySelector('.eraser');
+  eraser.style.border = eraserBtn? 'solid 3px rgb(0, 255, 234)' : 'solid 3px rgb(21, 25, 255)';
+
+  let rgb = document.querySelector('.rgb');
+  rgb.style.border = rgbButton? 'solid 3px rgb(0, 255, 234)' : 'solid 3px rgb(21, 25, 255)';
+}
+
+function swapEraser() {
+  let gridItems = document.querySelectorAll('.gridItem');
+  let gridContainer = document.querySelector('.gridContainer');
+  gridItems.forEach(function(gridItem) {
+    gridItem.addEventListener('mouseover', function() {
+      this.style.backgroundColor = gridContainer.style.backgroundColor;
     });
   });
 }
 
 function toggleEraser() {
+  let toggleBtn = false;
   let eraser = document.querySelector('.eraser');
-  let gridItems = document.querySelectorAll('.gridItem');
-  let gridContainer = document.querySelector('.gridContainer');
   eraser.addEventListener('click', function() {
-    gridItems.forEach(function(gridItem) {
-      gridItem.addEventListener('mouseover', function() {
-        this.style.backgroundColor = gridContainer.style.backgroundColor;
-      });
-    });
+    if(toggleBtn) penColor(); else swapEraser();
+    toggleBtn = !toggleBtn;
+    toggleClickColor(toggleBtn, false);
   });
 }
 
@@ -74,15 +80,23 @@ function getRandomRgb() {
   return rgbColor;
 }
 
-function toggleRgbColor() {
-  let rgb = document.querySelector('.rgb');
+function swapRgb() {
   let gridItems = document.querySelectorAll('.gridItem');
-  rgb.addEventListener('click', function() {
-    gridItems.forEach(function(gridItem) {
-      gridItem.addEventListener('mouseover', function() {
-        this.style.backgroundColor = getRandomRgb();
-      });
+  gridItems.forEach(function(gridItem) {
+    gridItem.addEventListener('mouseover', function() {
+      this.style.backgroundColor = getRandomRgb();
     });
+  });
+}
+
+function toggleRgbColor() {
+  let toggleBtn = false;
+  let rgb = document.querySelector('.rgb');
+
+  rgb.addEventListener('click', function() {
+    if(toggleBtn) penColor(); else swapRgb();
+    toggleBtn = !toggleBtn;
+    toggleClickColor(false, toggleBtn);
   });
 }
 
@@ -90,7 +104,7 @@ function updateGridDimension() {
   let rangeSlider = document.querySelector('#rangeSlider');
   let grids = document.querySelector('.grids');
   rangeSlider.addEventListener('input', function() {
-    grids.textContent = rangeSlider.value;
+    grids.textContent = rangeSlider.value + ' x ' + rangeSlider.value;
     deleteExistingGrid();
     createGrid(rangeSlider.value);
   })
@@ -106,6 +120,7 @@ function toggleGridLine() {
       gridItem.style.border = toggleBtn? 'solid 1px white' : 'none';
     });
     toggleBtn = !toggleBtn;
+    gridLine.style.border = toggleBtn? 'solid 3px rgb(0, 255, 234)' : 'solid 3px rgb(21, 25, 255)';
   });
 }
 
@@ -120,7 +135,20 @@ function clearGrid() {
   });
 }
 
+function sliderColor() {
+  const slider = document.getElementById("rangeSlider")
+  const min = slider.min
+  const max = slider.max
+  const value = slider.value
+
+  slider.style.background = `linear-gradient(to right, rgb(0, 247, 255) 0%, rgb(0, 247, 255) ${(value-min)/(max-min)*100}%, #DEE2E6 ${(value-min)/(max-min)*100}%, #DEE2E6 100%)`
+
+  slider.oninput = function() {
+    this.style.background = `linear-gradient(to right, rgb(0, 247, 255) 0%, rgb(0, 247, 255) ${(this.value-this.min)/(this.max-this.min)*100}%, #DEE2E6 ${(this.value-this.min)/(this.max-this.min)*100}%, #DEE2E6 100%)`
+};
+}
+
 createGrid();
 updateGridDimension();
+sliderColor();
 
-// add toggle functionality
